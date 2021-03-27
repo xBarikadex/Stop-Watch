@@ -1,39 +1,44 @@
 let startToggle = 0;
 let lapToggle = 0;
 
-function startLoop() {
+let centiseconds = Number(document.getElementById("centiseconds").innerHTML);
+let seconds = Number(document.getElementById("seconds").innerHTML);
+let minutes = Number(document.getElementById("minutes").innerHTML);
+
+function startStopInterval() {
     if (startToggle == 0) {
-        interval = setInterval(function() {
-            let centiseconds = Number(document.getElementById("centiseconds").innerHTML);
-            let seconds = Number(document.getElementById("seconds").innerHTML);
-            let minutes = Number(document.getElementById("minutes").innerHTML);
-            for (i = 0; i < 1; i++) {
-                centiseconds++;
-                document.getElementById("centiseconds").innerHTML = centiseconds;
-                if (centiseconds < 10) {
-                    document.getElementById("centiseconds").innerHTML = "0" + centiseconds;
-                }
-                if (centiseconds == 100) {
-                    centiseconds = 0;
-                    document.getElementById("centiseconds").innerHTML = centiseconds;
-                    seconds++;
-                    document.getElementById("seconds").innerHTML = seconds;
-                    if (seconds < 10) {
-                        document.getElementById("seconds").innerHTML = "0" + seconds;
-                    }
-                    if (seconds == 60) {
-                        seconds = 0;
-                        document.getElementById("seconds").innerHTML = seconds;
-                        minutes++;
-                        document.getElementById("minutes").innerHTML = minutes;
-                        if (minutes < 10) {
-                            document.getElementById("minutes").innerHTML = "0" + minutes;
-                        }
-                    }
-                }
+        centiseconds = Number(document.getElementById("centiseconds").innerHTML);
+        seconds = Number(document.getElementById("seconds").innerHTML);
+        minutes = Number(document.getElementById("minutes").innerHTML);
+        interval = setInterval(startLoop, 10);
+    }
+}
+
+function startLoop() {
+    startToggle = 1;
+
+    centiseconds++;
+    document.getElementById("centiseconds").innerHTML = centiseconds;
+    if (centiseconds < 10) {
+        document.getElementById("centiseconds").innerHTML = "0" + centiseconds;
+    }
+    if (centiseconds == 100) {
+        centiseconds = 0;
+        document.getElementById("centiseconds").innerHTML = centiseconds;
+        seconds++;
+        document.getElementById("seconds").innerHTML = seconds;
+        if (seconds < 10) {
+            document.getElementById("seconds").innerHTML = "0" + seconds;
+        }
+        if (seconds == 60) {
+            seconds = 0;
+            document.getElementById("seconds").innerHTML = seconds;
+            minutes++;
+            document.getElementById("minutes").innerHTML = minutes;
+            if (minutes < 10) {
+                document.getElementById("minutes").innerHTML = "0" + minutes;
             }
-        }, 10);
-        startToggle = 1;
+        }
     }
 }
 
@@ -44,7 +49,7 @@ function stopLoop() {
 
 function timerToggle() {
     if (startToggle == 0) {
-        startLoop();
+        startStopInterval();
     }
     else if (startToggle == 1) {
         stopLoop();
@@ -70,10 +75,10 @@ function lap() {
 
 function example() {
     if (startToggle == 0) {
-        interval = setInterval(function() {
-            let centiseconds = Number(document.getElementById("centiseconds").innerHTML);
-            let seconds = Number(document.getElementById("seconds").innerHTML);
-            let minutes = Number(document.getElementById("minutes").innerHTML);
+        centiseconds = Number(document.getElementById("centiseconds").innerHTML);
+        seconds = Number(document.getElementById("seconds").innerHTML);
+        minutes = Number(document.getElementById("minutes").innerHTML);
+        lapInterval = setInterval(function() {
             for (i = 0; i < 1; i++) {
                 centiseconds++;
                 if (centiseconds == 100) {
@@ -93,5 +98,6 @@ function example() {
 
 function prints() {
     example();
+    stopLoop();
     console.log(minutes + ":" + seconds + " " + centiseconds);
 }
